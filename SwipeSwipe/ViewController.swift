@@ -9,12 +9,20 @@ class ViewController: UIViewController {
     
     private func setup() {
         view.backgroundColor = .white
-        let redView = UIView()
-        redView.backgroundColor = .red
-        let blueView = UIView()
-        blueView.backgroundColor = .blue
-        let stackView = UIStackView(arrangedSubviews: [redView, blueView])
-        stackView.distribution = .fillEqually
+        let subViews = [UIColor.lightGray, UIColor.gray, UIColor.darkGray].map { (colour) -> UIView in
+            let view = UIView()
+            view.backgroundColor = colour
+            return view
+        }
+        let topStackView = UIStackView(arrangedSubviews: subViews)
+        topStackView.distribution = .fillEqually
+        topStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        let middleView = UIView()
+        middleView.backgroundColor = .blue
+        let bottomView = UIView()
+        bottomView.backgroundColor = .green
+        bottomView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        let stackView = UIStackView(arrangedSubviews: [topStackView, middleView, bottomView])
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
