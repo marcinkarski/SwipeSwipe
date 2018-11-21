@@ -3,20 +3,26 @@ import UIKit
 class ViewController: UIViewController {
     
     let topStackView = TopNavigation()
-    let middleView = UIView()
+    let cardDeckView = UIView()
     let bottomStackView = BottomControls()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        dummyCard()
+    }
+    
+    private func dummyCard() {
+        
+        
     }
     
     private func setup() {
         view.backgroundColor = .white
 
-        middleView.backgroundColor = .yellow
+        cardDeckView.backgroundColor = .yellow
         
-        let stackView = UIStackView(arrangedSubviews: [topStackView, middleView, bottomStackView])
+        let stackView = UIStackView(arrangedSubviews: [topStackView, cardDeckView, bottomStackView])
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
