@@ -2,17 +2,25 @@ import UIKit
 
 class CardView: UIView {
     
-    private let image = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
+    private let image = UIImageView(image: #imageLiteral(resourceName: "img1"))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
         layer.cornerRadius = 12
-        layer.masksToBounds = true
-        image.contentMode = .bottom
+        clipsToBounds = true
+        image.contentMode = .scaleAspectFill
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(image)
-//        NSLayoutConstraint.activate([image.leadingAnchor.constraint(equalTo: self.leadingAnchor), image.topAnchor.constraint(equalTo: self.topAnchor), image.trailingAnchor.constraint(equalTo: self.trailingAnchor), image.bottomAnchor.constraint(equalTo: self.bottomAnchor)])
+        image.fillSuperview()
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        addGestureRecognizer(panGesture)
+    }
+    
+    @objc private func handlePan(gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: self)
+        print(translation.x)
+        transform = CGAffineTransform(translationX: translation.x, y: translation.y)
     }
     
     required init?(coder aDecoder: NSCoder) {
