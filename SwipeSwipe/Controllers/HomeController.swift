@@ -1,10 +1,12 @@
 import UIKit
 
-class ViewController: UIViewController {
+class HomeController: UIViewController {
     
-    let topStackView = TopNavigation()
-    let cardDeckView = UIView()
-    let bottomStackView = BottomControls()
+    private let topStackView = TopNavigation()
+    private let cardDeckView = UIView()
+    private let bottomStackView = BottomControls()
+    
+    private let places = [Place(image: "img1", name: "Puerto del Carmen", type: "Viepoint"), Place(image: "img2", name: "Puerto del Carmen", type: "Viepoint")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,9 +15,12 @@ class ViewController: UIViewController {
     }
     
     private func dummyCard() {
-        let cardView = CardView(frame: .zero)
-        cardDeckView.addSubview(cardView)
-        NSLayoutConstraint.activate([cardView.leadingAnchor.constraint(equalTo: cardDeckView.leadingAnchor), cardView.topAnchor.constraint(equalTo: cardDeckView.topAnchor), cardView.trailingAnchor.constraint(equalTo: cardDeckView.trailingAnchor), cardView.bottomAnchor.constraint(equalTo: cardDeckView.bottomAnchor)])
+        places.forEach { (place) in
+            let cardView = CardView(frame: .zero)
+            cardView.image.image = UIImage(named: place.image)
+            cardDeckView.addSubview(cardView)
+            NSLayoutConstraint.activate([cardView.leadingAnchor.constraint(equalTo: cardDeckView.leadingAnchor), cardView.topAnchor.constraint(equalTo: cardDeckView.topAnchor), cardView.trailingAnchor.constraint(equalTo: cardDeckView.trailingAnchor), cardView.bottomAnchor.constraint(equalTo: cardDeckView.bottomAnchor)])
+        }
     }
     
     private func setup() {
