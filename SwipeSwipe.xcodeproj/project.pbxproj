@@ -14,7 +14,7 @@
 		2E60658121A5E018005AF201 /* BottomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E60658021A5E018005AF201 /* BottomControls.swift */; };
 		2E60658421A5E72E005AF201 /* TopNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E60658321A5E72E005AF201 /* TopNavigation.swift */; };
 		2E60658621A5FE1B005AF201 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E60658521A5FE1B005AF201 /* CardView.swift */; };
-		2E60658821A725B9005AF201 /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E60658721A725B9005AF201 /* Extensions+UIView.swift */; };
+		2E60658821A725B9005AF201 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E60658721A725B9005AF201 /* UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 		2E60658021A5E018005AF201 /* BottomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomControls.swift; sourceTree = "<group>"; };
 		2E60658321A5E72E005AF201 /* TopNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigation.swift; sourceTree = "<group>"; };
 		2E60658521A5FE1B005AF201 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		2E60658721A725B9005AF201 /* Extensions+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
+		2E60658721A725B9005AF201 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +63,9 @@
 				2E5BA66321A472F700137DE5 /* AppDelegate.swift */,
 				2E60658221A5E697005AF201 /* Controllers */,
 				2E60657F21A5DFAB005AF201 /* Views */,
-				2E5BA66A21A472F800137DE5 /* Assets.xcassets */,
+				2E7935E221A82F0D00C642F6 /* Extensions */,
 				2E5BA66C21A472F800137DE5 /* LaunchScreen.storyboard */,
+				2E5BA66A21A472F800137DE5 /* Assets.xcassets */,
 				2E5BA66F21A472F800137DE5 /* Info.plist */,
 			);
 			path = SwipeSwipe;
@@ -73,7 +74,6 @@
 		2E60657F21A5DFAB005AF201 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2E60658721A725B9005AF201 /* Extensions+UIView.swift */,
 				2E60658321A5E72E005AF201 /* TopNavigation.swift */,
 				2E60658021A5E018005AF201 /* BottomControls.swift */,
 				2E60658521A5FE1B005AF201 /* CardView.swift */,
@@ -87,6 +87,14 @@
 				2E5BA66521A472F700137DE5 /* ViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		2E7935E221A82F0D00C642F6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2E60658721A725B9005AF201 /* UIView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,7 +169,7 @@
 			files = (
 				2E5BA66621A472F700137DE5 /* ViewController.swift in Sources */,
 				2E60658421A5E72E005AF201 /* TopNavigation.swift in Sources */,
-				2E60658821A725B9005AF201 /* Extensions+UIView.swift in Sources */,
+				2E60658821A725B9005AF201 /* UIView.swift in Sources */,
 				2E60658121A5E018005AF201 /* BottomControls.swift in Sources */,
 				2E5BA66421A472F700137DE5 /* AppDelegate.swift in Sources */,
 				2E60658621A5FE1B005AF201 /* CardView.swift in Sources */,

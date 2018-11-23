@@ -18,8 +18,7 @@ class CardView: UIView {
     }
     
     @objc private func handlePan(gesture: UIPanGestureRecognizer) {
-
-        
+     
         switch gesture.state {
         case .changed:
             let translation = gesture.translation(in: self)
