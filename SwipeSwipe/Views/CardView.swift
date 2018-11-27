@@ -3,16 +3,30 @@ import UIKit
 class CardView: UIView {
     
     let image = UIImageView(image: #imageLiteral(resourceName: "img1"))
+    
+    let label: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Name"
+        label.font = UIFont.systemFont(ofSize: 22, weight: .heavy)
+        label.numberOfLines = 0
+        label.textColor = .white
+        return label
+    }()
+    
     private let threshold: CGFloat = 100
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 12
         clipsToBounds = true
-        image.contentMode = .scaleAspectFill
         translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFill
         addSubview(image)
+        addSubview(label)
         image.fillSuperview()
+        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16), label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)])
+        
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)

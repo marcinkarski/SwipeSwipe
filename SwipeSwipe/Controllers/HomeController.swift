@@ -6,7 +6,7 @@ class HomeController: UIViewController {
     private let cardDeckView = UIView()
     private let bottomStackView = BottomControls()
     
-    private let places = [Place(image: "img1", name: "Puerto del Carmen", type: "Viepoint"), Place(image: "img2", name: "Puerto del Carmen", type: "Viepoint")]
+    private let places = [Place(image: "img1", name: "Puerto del Carmen", type: "Viepoint"), Place(image: "img2", name: "Gran Canaria", type: "Viepoint")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +18,10 @@ class HomeController: UIViewController {
         places.forEach { (place) in
             let cardView = CardView(frame: .zero)
             cardView.image.image = UIImage(named: place.image)
+//            cardView.label.text = "\(place.name)\n\(place.type)"
+            let attibutedText = NSMutableAttributedString(string: place.name, attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .bold)])
+            attibutedText.append(NSAttributedString(string: "\n\(place.type)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .heavy)]))
+            cardView.label.attributedText = attibutedText
             cardDeckView.addSubview(cardView)
             NSLayoutConstraint.activate([cardView.leadingAnchor.constraint(equalTo: cardDeckView.leadingAnchor), cardView.topAnchor.constraint(equalTo: cardDeckView.topAnchor), cardView.trailingAnchor.constraint(equalTo: cardDeckView.trailingAnchor), cardView.bottomAnchor.constraint(equalTo: cardDeckView.bottomAnchor)])
         }
