@@ -2,7 +2,16 @@ import UIKit
 
 class CardView: UIView {
     
-    let image = UIImageView(image: #imageLiteral(resourceName: "img1"))
+    private let threshold: CGFloat = 200
+    
+    let imageView: UIImageView = {
+        let image = UIImage(named: "img1")
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+//    let imageView = UIImageView(image: #imageLiteral(resourceName: "img1"))
     
     let label: UILabel = {
         let label = UILabel()
@@ -13,20 +22,19 @@ class CardView: UIView {
         label.textColor = .white
         return label
     }()
-    
-    private let threshold: CGFloat = 100
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 12
         clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFill
-        addSubview(image)
+        addSubview(imageView)
         addSubview(label)
-        image.fillSuperview()
-        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16), label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)])
+        imageView.fillSuperview()
         
+//        NSLayoutConstraint.activate([imageView.leadingAnchor.constraint(equalTo: leadingAnchor), imageView.topAnchor.constraint(equalTo: topAnchor), imageView.trailingAnchor.constraint(equalTo: trailingAnchor), imageView.bottomAnchor.constraint(equalTo: bottomAnchor)])
+        
+        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16), label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)])
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)
