@@ -6,7 +6,9 @@ class HomeController: UIViewController {
     private let cardDeckView = UIView()
     private let bottomStackView = BottomControls()
     
-    private let places = [Place(image: "img1", name: "Puerto del Carmen", type: "Beach"), Place(image: "img2", name: "Roque Nubio", type: "Viewpoint"), Place(image: "img3", name: "Caleta de Famara", type: "Restaurant"), Place(image: "img4", name: "Playa de La Teresitas", type: "Beach"), Place(image: "img5", name: "Montana Roja", type: "Viewpoint")]
+//    private let places = [Place(image: "img1", name: "Puerto del Carmen", type: "Beach"), Place(image: "img2", name: "Roque Nubio", type: "Viewpoint"), Place(image: "img3", name: "Caleta de Famara", type: "Restaurant"), Place(image: "img4", name: "Playa de La Teresitas", type: "Beach"), Place(image: "img5", name: "Montana Roja", type: "Viewpoint")]
+    
+    let viewModel = [Place(imageName: "img1", name: "Puerto del Carmen", type: "Beach").toCardViewModel()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,14 +17,14 @@ class HomeController: UIViewController {
     }
     
     private func dummyCard() {
-        places.forEach { (place) in
+
+        viewModel.forEach { (card) in
             let cardView = CardView(frame: .zero)
-            cardView.imageView.image = UIImage(named: place.image)
-            let attibutedText = NSMutableAttributedString(string: place.name, attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .bold)])
-            attibutedText.append(NSAttributedString(string: "\n\(place.type)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .heavy)]))
-            cardView.label.attributedText = attibutedText
+            cardView.imageView.image = UIImage(named: card.imageName)
+            cardView.label.attributedText = card.text
+            cardView.label.textAlignment = card.textAlignment
             cardDeckView.addSubview(cardView)
-            NSLayoutConstraint.activate([cardView.leadingAnchor.constraint(equalTo: cardDeckView.leadingAnchor), cardView.topAnchor.constraint(equalTo: cardDeckView.topAnchor), cardView.trailingAnchor.constraint(equalTo: cardDeckView.trailingAnchor), cardView.bottomAnchor.constraint(equalTo: cardDeckView.bottomAnchor)])
+            cardView.fillSuperview()
         }
     }
     
