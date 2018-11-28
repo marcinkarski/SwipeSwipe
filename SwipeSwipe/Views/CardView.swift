@@ -10,9 +10,7 @@ class CardView: UIView {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-    
-//    let imageView = UIImageView(image: #imageLiteral(resourceName: "img1"))
-    
+ 
     let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -31,8 +29,6 @@ class CardView: UIView {
         addSubview(imageView)
         addSubview(label)
         imageView.fillSuperview()
-        
-//        NSLayoutConstraint.activate([imageView.leadingAnchor.constraint(equalTo: leadingAnchor), imageView.topAnchor.constraint(equalTo: topAnchor), imageView.trailingAnchor.constraint(equalTo: trailingAnchor), imageView.bottomAnchor.constraint(equalTo: bottomAnchor)])
         
         NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16), label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)])
         
