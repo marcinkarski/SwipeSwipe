@@ -2,16 +2,24 @@ import UIKit
 
 class CardView: UIView {
     
+    var cardViewModel: CardViewModel! {
+        didSet {
+            imageView.image = UIImage(named: cardViewModel.imageName)
+            label.attributedText = cardViewModel.text
+            label.textAlignment = cardViewModel.textAlignment
+        }
+    }
+    
     private let threshold: CGFloat = 200
     
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let image = UIImage(named: "img1")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
  
-    let label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Name"

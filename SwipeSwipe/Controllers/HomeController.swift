@@ -6,7 +6,11 @@ class HomeController: UIViewController {
     private let cardDeckView = UIView()
     private let bottomStackView = BottomControls()
     
-    let viewModel = [Place(imageName: "img1", name: "Puerto del Carmen", type: "Beach").toCardViewModel(), Place(imageName: "img2", name: "Roque Nubio", type: "Viewpoint").toCardViewModel(), Place(imageName: "img3", name: "Caleta de Famara", type: "Restaurant").toCardViewModel(), Place(imageName: "img4", name: "Playa de La Teresitas", type: "Beach").toCardViewModel(), Place(imageName: "img5", name: "Montana Roja", type: "Viewpoint").toCardViewModel()]
+    let viewModel: [CardViewModel] = {
+        let makers = [Place(imageName: "img1", name: "Puerto del Carmen", type: "Beach"), Place(imageName: "img2", name: "Roque Nubio", type: "Viewpoint"), Place(imageName: "img3", name: "Caleta de Famara", type: "Restaurant"), Place(imageName: "img4", name: "Playa de La Teresitas", type: "Beach"), Place(imageName: "img5", name: "Montana Roja", type: "Viewpoint"), Advert(title: "Must See", brandName: "Gran Canaria", posterName: "img1")] as [MakeCardViewModel]
+        let viewModel = makers.map({return $0.toCardViewModel()})
+        return viewModel
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,9 +21,7 @@ class HomeController: UIViewController {
     private func dummyCard() {
         viewModel.forEach { (card) in
             let cardView = CardView(frame: .zero)
-            cardView.imageView.image = UIImage(named: card.imageName)
-            cardView.label.attributedText = card.text
-            cardView.label.textAlignment = card.textAlignment
+            cardView.cardViewModel = card
             cardDeckView.addSubview(cardView)
             cardView.fillSuperview()
         }
