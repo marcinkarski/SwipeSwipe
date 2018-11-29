@@ -8,6 +8,13 @@ class CardView: UIView {
             imageView.image = UIImage(named: imageName)
             label.attributedText = cardViewModel.text
             label.textAlignment = cardViewModel.alignment
+            
+            (0..<cardViewModel.images.count).forEach { (_) in
+                let barView = UIView()
+                barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
+                pageControl.addArrangedSubview(barView)
+            }
+            pageControl.arrangedSubviews.first?.backgroundColor = .lightGray
         }
     }
     
@@ -51,6 +58,11 @@ class CardView: UIView {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+    }
+    
+    @objc private func handleTap() {
+        print("Tap")
     }
     
     private func setupPageControl() {
@@ -58,12 +70,6 @@ class CardView: UIView {
         NSLayoutConstraint.activate([pageControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), pageControl.topAnchor.constraint(equalTo: topAnchor, constant: 16), pageControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16), pageControl.heightAnchor.constraint(equalToConstant: 4)])
         pageControl.spacing = 4
         pageControl.distribution = .fillEqually
-        (0..<4).forEach { (_) in
-            let barView = UIView()
-            barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
-            pageControl.addArrangedSubview(barView)
-        }
-        pageControl.arrangedSubviews.first?.backgroundColor = .lightGray
     }
     
     private func setupGradient() {
