@@ -4,9 +4,10 @@ class CardView: UIView {
     
     var cardViewModel: CardViewModel! {
         didSet {
-            imageView.image = UIImage(named: cardViewModel.imageName)
+            let imageName = cardViewModel.images[0]
+            imageView.image = UIImage(named: imageName)
             label.attributedText = cardViewModel.text
-            label.textAlignment = cardViewModel.textAlignment
+            label.textAlignment = cardViewModel.alignment
         }
     }
     

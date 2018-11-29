@@ -14,6 +14,6 @@ struct Place: MakeCardViewModel {
     func toCardViewModel() -> CardViewModel {
         let attibutedString = NSMutableAttributedString(string: name, attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .bold)])
         attibutedString.append(NSAttributedString(string: "\n\(type)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .heavy)]))
-        return CardViewModel(imageName: imageName, text: attibutedString, textAlignment: .left)
+        return CardViewModel(images: [imageName], text: attibutedString, textAlignment: .left)
     }
 }

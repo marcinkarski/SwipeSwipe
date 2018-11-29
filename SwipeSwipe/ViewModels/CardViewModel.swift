@@ -5,13 +5,13 @@ protocol MakeCardViewModel {
 }
 
 struct CardViewModel {
-    let imageName: String
+    let images: [String]
     let text: NSAttributedString
-    let textAlignment: NSTextAlignment
+    let alignment: NSTextAlignment
     
-    init(imageName: String, text: NSAttributedString, textAlignment: NSTextAlignment) {
-        self.imageName = imageName
+    init(images: [String], text: NSAttributedString, textAlignment: NSTextAlignment) {
+        self.images = images
         self.text = text
-        self.textAlignment = textAlignment
+        self.alignment = textAlignment
     }
 }
