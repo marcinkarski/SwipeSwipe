@@ -4,7 +4,7 @@ class CardView: UIView {
     
     var cardViewModel: CardViewModel! {
         didSet {
-            let imageName = cardViewModel.images[0]
+            let imageName = cardViewModel.images.first ?? ""
             imageView.image = UIImage(named: imageName)
             label.attributedText = cardViewModel.text
             label.textAlignment = cardViewModel.alignment
@@ -12,6 +12,13 @@ class CardView: UIView {
     }
     
     private let threshold: CGFloat = 150
+    private let gradient = CAGradientLayer()
+    
+    private let pageControl: UIStackView = {
+        let pageControl = UIStackView()
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        return pageControl
+    }()
     
     private let imageView: UIImageView = {
         let image = UIImage(named: "img1")
@@ -28,8 +35,6 @@ class CardView: UIView {
         return label
     }()
     
-    let gradient = CAGradientLayer()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 12
@@ -37,6 +42,7 @@ class CardView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
         setupGradient()
+        setupPageControl()
         addSubview(label)
         imageView.fillSuperview()
         
@@ -45,6 +51,19 @@ class CardView: UIView {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)
+    }
+    
+    private func setupPageControl() {
+        addSubview(pageControl)
+        NSLayoutConstraint.activate([pageControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), pageControl.topAnchor.constraint(equalTo: topAnchor, constant: 16), pageControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16), pageControl.heightAnchor.constraint(equalToConstant: 4)])
+        pageControl.spacing = 4
+        pageControl.distribution = .fillEqually
+        (0..<4).forEach { (_) in
+            let barView = UIView()
+            barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
+            pageControl.addArrangedSubview(barView)
+        }
+        pageControl.arrangedSubviews.first?.backgroundColor = .lightGray
     }
     
     private func setupGradient() {
