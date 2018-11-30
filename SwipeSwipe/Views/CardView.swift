@@ -11,15 +11,17 @@ class CardView: UIView {
             
             (0..<cardViewModel.images.count).forEach { (_) in
                 let barView = UIView()
-                barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
+                barView.backgroundColor = barDeselectedColour
                 pageControl.addArrangedSubview(barView)
             }
-            pageControl.arrangedSubviews.first?.backgroundColor = .lightGray
+            pageControl.arrangedSubviews.first?.backgroundColor = .white
         }
     }
     
     private let threshold: CGFloat = 150
     private let gradient = CAGradientLayer()
+    private var imageIndex = 0
+    private let barDeselectedColour = UIColor(white: 0, alpha: 0.1)
     
     private let pageControl: UIStackView = {
         let pageControl = UIStackView()
@@ -61,13 +63,25 @@ class CardView: UIView {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     }
     
-    @objc private func handleTap() {
-        print("Tap")
+    @objc private func handleTap(gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: self)
+        let shouldAdvanceNextPhoto = location.x > frame.width / 2 ? true : false
+        if shouldAdvanceNextPhoto {
+            imageIndex = min(imageIndex + 1, cardViewModel.images.count - 1)
+        } else {
+            imageIndex = max(0, imageIndex - 1)
+        }
+        let imageName = cardViewModel.images[imageIndex]
+        imageView.image = UIImage(named: imageName)
+        pageControl.arrangedSubviews.forEach { (view) in
+            view.backgroundColor = barDeselectedColour
+        }
+        pageControl.arrangedSubviews[imageIndex].backgroundColor = .white
     }
     
     private func setupPageControl() {
         addSubview(pageControl)
-        NSLayoutConstraint.activate([pageControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), pageControl.topAnchor.constraint(equalTo: topAnchor, constant: 16), pageControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16), pageControl.heightAnchor.constraint(equalToConstant: 4)])
+        NSLayoutConstraint.activate([pageControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), pageControl.topAnchor.constraint(equalTo: topAnchor, constant: 16), pageControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16), pageControl.heightAnchor.constraint(equalToConstant: 2)])
         pageControl.spacing = 4
         pageControl.distribution = .fillEqually
     }
