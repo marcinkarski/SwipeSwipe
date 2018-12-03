@@ -15,12 +15,23 @@ class CardView: UIView {
                 pageControl.addArrangedSubview(barView)
             }
             pageControl.arrangedSubviews.first?.backgroundColor = .white
+            setupImageIndexObserver()
+        }
+    }
+    
+    private func setupImageIndexObserver() {
+        cardViewModel.imageIndexObserver = { [unowned self] (index, image) in
+            self.imageView.image = image
+            self.pageControl.arrangedSubviews.forEach({ (view) in
+                view.backgroundColor = self.barDeselectedColour
+            })
+            self.pageControl.arrangedSubviews[index].backgroundColor = .white
         }
     }
     
     private let threshold: CGFloat = 150
     private let gradient = CAGradientLayer()
-    private var imageIndex = 0
+//    private var imageIndex = 0
     private let barDeselectedColour = UIColor(white: 0, alpha: 0.1)
     
     private let pageControl: UIStackView = {
@@ -67,16 +78,10 @@ class CardView: UIView {
         let location = gesture.location(in: self)
         let shouldAdvanceNextPhoto = location.x > frame.width / 2 ? true : false
         if shouldAdvanceNextPhoto {
-            imageIndex = min(imageIndex + 1, cardViewModel.images.count - 1)
+            cardViewModel.advanceToNextPhoto()
         } else {
-            imageIndex = max(0, imageIndex - 1)
+            cardViewModel.goToPreviousPhoto()
         }
-        let imageName = cardViewModel.images[imageIndex]
-        imageView.image = UIImage(named: imageName)
-        pageControl.arrangedSubviews.forEach { (view) in
-            view.backgroundColor = barDeselectedColour
-        }
-        pageControl.arrangedSubviews[imageIndex].backgroundColor = .white
     }
     
     private func setupPageControl() {

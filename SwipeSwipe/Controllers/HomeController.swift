@@ -7,7 +7,7 @@ class HomeController: UIViewController {
     private let bottomStackView = BottomControls()
     
     let viewModel: [CardViewModel] = {
-        let makers = [Place(images: ["img1", "img2"], name: "Puerto del Carmen", type: "Beach"), Place(images: ["img2"], name: "Roque Nubio", type: "Viewpoint"), Place(images: ["img3"], name: "Caleta de Famara", type: "Restaurant"), Place(images: ["img4"], name: "Playa de La Teresitas", type: "Beach"), Place(images: ["img5"], name: "Montana Roja", type: "Viewpoint"), Advert(title: "Must See", brandName: "Gran Canaria", posterName: "img1")] as [MakeCardViewModel]
+        let makers = [Place(images: ["img1", "img2"], name: "Puerto del Carmen", type: "Beach"), Place(images: ["img2"], name: "Roque Nubio", type: "Viewpoint"), Place(images: ["img3"], name: "Caleta de Famara", type: "Restaurant"), Place(images: ["img4"], name: "Playa de La Teresitas", type: "Beach"), Place(images: ["img1", "img2", "img3"], name: "Montana Roja", type: "Viewpoint"), Advert(title: "Must See", brandName: "Gran Canaria", posterName: "img1")] as [MakeCardViewModel]
         let viewModel = makers.map({return $0.toCardViewModel()})
         return viewModel
     }()
