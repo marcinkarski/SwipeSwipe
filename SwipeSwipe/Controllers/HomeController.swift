@@ -20,7 +20,8 @@ class HomeController: UIViewController {
     }
     
     @objc private func handleSettings() {
-        print("Settings")
+        let registrationController = RegistrationController()
+        present(registrationController, animated: true, completion: nil)
     }
     
     private func dummyCard() {
