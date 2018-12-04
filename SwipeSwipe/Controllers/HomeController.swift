@@ -14,8 +14,13 @@ class HomeController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         setup()
         dummyCard()
+    }
+    
+    @objc private func handleSettings() {
+        print("Settings")
     }
     
     private func dummyCard() {
