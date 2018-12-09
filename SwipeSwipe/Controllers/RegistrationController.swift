@@ -46,14 +46,30 @@ class RegistrationController: UIViewController {
         button.layer.cornerRadius = 25
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupNotification()
         setupGradient()
-        view.backgroundColor = .lightGray
-        
-        let stackView = UIStackView(arrangedSubviews: [selectPhotoButton, nameTextField, emailTextField, passwordTextField, registerButton])
+        layout()
+    }
+    
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
+    @objc private func handleKeyboard(notification: Notification) {
+        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardFrame = value.cgRectValue
+        print(keyboardFrame)
+        let bottomSpace = view.frame.height - stackView.frame.origin.y - stackView.frame.height
+        let difference = keyboardFrame.height - bottomSpace
+        self.view.transform = CGAffineTransform(translationX: 0, y: -difference)
+    }
+    
+    lazy var stackView = UIStackView(arrangedSubviews: [selectPhotoButton, nameTextField, emailTextField, passwordTextField, registerButton])
+    
+    fileprivate func layout() {
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
