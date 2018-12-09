@@ -35,6 +35,17 @@ class RegistrationController: UIViewController {
         textField.isSecureTextEntry = true
         return textField
     }()
+    
+    let registerButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Register", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        button.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        button.setTitleColor(.white, for: .normal)
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        button.layer.cornerRadius = 25
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +53,7 @@ class RegistrationController: UIViewController {
         setupGradient()
         view.backgroundColor = .lightGray
         
-        let stackView = UIStackView(arrangedSubviews: [selectPhotoButton, nameTextField, emailTextField, passwordTextField])
+        let stackView = UIStackView(arrangedSubviews: [selectPhotoButton, nameTextField, emailTextField, passwordTextField, registerButton])
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
