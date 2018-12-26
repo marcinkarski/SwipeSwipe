@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E2C4A6F21D42607007D5F0A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2E2C4A6E21D42607007D5F0A /* GoogleService-Info.plist */; };
 		2E5231B621D28D7900A6C487 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5231B521D28D7900A6C487 /* RegistrationViewModel.swift */; };
 		2E5BA66421A472F700137DE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5BA66321A472F700137DE5 /* AppDelegate.swift */; };
 		2E5BA66621A472F700137DE5 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5BA66521A472F700137DE5 /* HomeController.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		1D5A686292575C5415A0149D /* Pods-SwipeSwipe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwipeSwipe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwipeSwipe/Pods-SwipeSwipe.debug.xcconfig"; sourceTree = "<group>"; };
+		2E2C4A6E21D42607007D5F0A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2E5231B521D28D7900A6C487 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationViewModel.swift; path = SwipeSwipe/ViewModels/RegistrationViewModel.swift; sourceTree = SOURCE_ROOT; };
 		2E5BA66021A472F700137DE5 /* SwipeSwipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwipeSwipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E5BA66321A472F700137DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				2E60657F21A5DFAB005AF201 /* Views */,
 				2E7935E221A82F0D00C642F6 /* Extensions */,
 				2E5BA66C21A472F800137DE5 /* LaunchScreen.storyboard */,
+				2E2C4A6E21D42607007D5F0A /* GoogleService-Info.plist */,
 				2E5BA66A21A472F800137DE5 /* Assets.xcassets */,
 				2E5BA66F21A472F800137DE5 /* Info.plist */,
 			);
@@ -217,6 +220,7 @@
 			files = (
 				2E5BA66E21A472F800137DE5 /* LaunchScreen.storyboard in Resources */,
 				2E5BA66B21A472F800137DE5 /* Assets.xcassets in Resources */,
+				2E2C4A6F21D42607007D5F0A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,7 +258,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SwipeSwipe/Pods-SwipeSwipe-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
@@ -272,7 +276,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
