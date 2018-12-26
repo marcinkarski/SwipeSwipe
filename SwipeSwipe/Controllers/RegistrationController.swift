@@ -1,4 +1,6 @@
 import UIKit
+import Firebase
+import JGProgressHUD
 
 class RegistrationController: UIViewController {
     
@@ -12,8 +14,13 @@ class RegistrationController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.heightAnchor.constraint(equalToConstant: 300).isActive = true
         button.layer.cornerRadius = 16
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
         return button
     }()
+    
+    @objc private func handleSelectPhoto() {
+        print("Select")
+    }
     
     let nameTextField: TextField = {
         let textField = TextField(padding: 16)
@@ -63,8 +70,32 @@ class RegistrationController: UIViewController {
         button.isEnabled = false
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         button.layer.cornerRadius = 25
+        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
+    
+    @objc private func handleRegister() {
+        self.handleTapDismiss()
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print(error)
+                self.showHUD(error: error)
+                return
+            }
+            print(result?.user.uid ?? "")
+        }
+    }
+    
+    private func showHUD(error: Error) {
+        let hud = JGProgressHUD(style: .light)
+        hud.textLabel.text = "Failed to register a user"
+        hud.detailTextLabel.text = error.localizedDescription
+        hud.show(in: self.view)
+        hud.dismiss(afterDelay: 4, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
