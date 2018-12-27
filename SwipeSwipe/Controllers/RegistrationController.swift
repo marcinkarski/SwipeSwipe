@@ -14,12 +14,16 @@ class RegistrationController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.heightAnchor.constraint(equalToConstant: 300).isActive = true
         button.layer.cornerRadius = 16
+        button.imageView?.contentMode = .scaleAspectFill
+        button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
         return button
     }()
     
     @objc private func handleSelectPhoto() {
-        print("Select")
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
     }
     
     let nameTextField: TextField = {
@@ -107,8 +111,9 @@ class RegistrationController: UIViewController {
     }
     
     private func setupRegistrationObserver() {
-        registrationViewModel.formObserver = { [unowned self] (isFormValid) in
-            self.registerButton.isEnabled = true
+        registrationViewModel.bindableFormObsever.bind { [unowned self] (isFormValid) in
+//            self.registerButton.isEnabled = true
+            guard let isFormValid = isFormValid else { return }
             if isFormValid {
                 self.registerButton.backgroundColor = .purple
                 self.registerButton.setTitleColor(.white, for: .normal)
@@ -117,6 +122,23 @@ class RegistrationController: UIViewController {
                 self.registerButton.setTitleColor(.gray, for: .disabled)
             }
         }
+//        registrationViewModel.formObserver = { [unowned self] (isFormValid) in
+//            self.registerButton.isEnabled = true
+//            if isFormValid {
+//                self.registerButton.backgroundColor = .purple
+//                self.registerButton.setTitleColor(.white, for: .normal)
+//            } else {
+//                self.registerButton.backgroundColor = .lightGray
+//                self.registerButton.setTitleColor(.gray, for: .disabled)
+//            }
+//        }
+        registrationViewModel.bindableImage.bind { [unowned self] (image) in
+            self.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+            
+        }
+        
+//        registrationViewModel.imageObserver = { [unowned self] image in
+//        }
     }
     
     private func setupTap() {
@@ -178,5 +200,19 @@ class RegistrationController: UIViewController {
         gradient.locations = [0, 1]
         view.layer.addSublayer(gradient)
         gradient.frame = view.bounds
+    }
+}
+
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        registrationViewModel.bindableImage.value = image
+//        registrationViewModel.image = image
+        dismiss(animated: true)
     }
 }

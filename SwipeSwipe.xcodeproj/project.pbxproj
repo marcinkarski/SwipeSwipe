@@ -22,6 +22,7 @@
 		2E781D6721B7243B003E102A /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E781D6621B7243B003E102A /* RegistrationController.swift */; };
 		2E781D6921B73617003E102A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E781D6821B73617003E102A /* TextField.swift */; };
 		2E7935E521A8ADEF00C642F6 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7935E421A8ADEF00C642F6 /* Place.swift */; };
+		2EB880F421D556080046A83D /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB880F321D556080046A83D /* Bindable.swift */; };
 		AF4E13D816C613C5C3BC9CFD /* Pods_SwipeSwipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27ABCC29A7467AF8ABF6CDB /* Pods_SwipeSwipe.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		2E781D6621B7243B003E102A /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		2E781D6821B73617003E102A /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		2E7935E421A8ADEF00C642F6 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		2EB880F321D556080046A83D /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Bindable.swift; path = SwipeSwipe/Bindable.swift; sourceTree = SOURCE_ROOT; };
 		B27ABCC29A7467AF8ABF6CDB /* Pods_SwipeSwipe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwipeSwipe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1B6FE131A1409F9A082128B /* Pods-SwipeSwipe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwipeSwipe.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwipeSwipe/Pods-SwipeSwipe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				2E5BA66321A472F700137DE5 /* AppDelegate.swift */,
+				2EB880F321D556080046A83D /* Bindable.swift */,
 				2E60658221A5E697005AF201 /* Controllers */,
 				2E5BF45E21AEE7D20009BA15 /* ViewModels */,
 				2E7935E321A8ADE100C642F6 /* Models */,
@@ -302,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EB880F421D556080046A83D /* Bindable.swift in Sources */,
 				2E5BA66621A472F700137DE5 /* HomeController.swift in Sources */,
 				2E5231B621D28D7900A6C487 /* RegistrationViewModel.swift in Sources */,
 				2E781D6921B73617003E102A /* TextField.swift in Sources */,
