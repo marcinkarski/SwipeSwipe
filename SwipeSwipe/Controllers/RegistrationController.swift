@@ -78,22 +78,21 @@ class RegistrationController: UIViewController {
         return button
     }()
     
+    let registerHUD = JGProgressHUD(style: .light)
     @objc private func handleRegister() {
         self.handleTapDismiss()
-        guard let email = emailTextField.text else { return }
-        guard let password = passwordTextField.text else { return }
-        
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+
+        registrationViewModel.performRegistration { [weak self] (error) in
             if let error = error {
-                print(error)
-                self.showHUD(error: error)
+                self?.showHUD(error: error)
                 return
             }
-            print(result?.user.uid ?? "")
+            print("Finished registering a user")
         }
     }
     
     private func showHUD(error: Error) {
+        registerHUD.dismiss(animated: true)
         let hud = JGProgressHUD(style: .light)
         hud.textLabel.text = "Failed to register a user"
         hud.detailTextLabel.text = error.localizedDescription
@@ -112,7 +111,7 @@ class RegistrationController: UIViewController {
     
     private func setupRegistrationObserver() {
         registrationViewModel.bindableFormObsever.bind { [unowned self] (isFormValid) in
-//            self.registerButton.isEnabled = true
+            self.registerButton.isEnabled = true
             guard let isFormValid = isFormValid else { return }
             if isFormValid {
                 self.registerButton.backgroundColor = .purple
@@ -134,7 +133,14 @@ class RegistrationController: UIViewController {
 //        }
         registrationViewModel.bindableImage.bind { [unowned self] (image) in
             self.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
-            
+        }
+        registrationViewModel.binableIsRegistering.bind { [unowned self] (isRegistering) in
+            if isRegistering == true {
+                self.registerHUD.textLabel.text = "Register"
+                self.registerHUD.show(in: self.view)
+            } else {
+                self.registerHUD.dismiss()
+            }
         }
         
 //        registrationViewModel.imageObserver = { [unowned self] image in
@@ -156,7 +162,7 @@ class RegistrationController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
+//        NotificationCenter.default.removeObserver(self)
     }
     
     @objc private func handleKeyboardHide() {
