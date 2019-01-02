@@ -1,19 +1,23 @@
 import UIKit
 
 struct Place: MakeCardViewModel {
-    let images: [String]
-    let name: String
-    let type: String
+    let uid: String
+    var imageUrl1: String?
+    var name: String?
+    var type: String?
     
-    init(images: [String], name: String, type: String) {
-        self.images = images
-        self.name = name
-        self.type = type
+    init(dictionary: [String: Any]) {
+        
+        self.uid = dictionary["uid"] as? String ?? ""
+        self.imageUrl1 = dictionary["imageUrl1"] as? String ?? ""
+        self.name = dictionary["name"] as? String ?? ""
+        self.type = dictionary["type"] as? String ?? ""
     }
     
     func toCardViewModel() -> CardViewModel {
-        let attibutedString = NSMutableAttributedString(string: name, attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .bold)])
-        attibutedString.append(NSAttributedString(string: "\n\(type)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .heavy)]))
-        return CardViewModel(images: images, text: attibutedString, textAlignment: .left)
+        let typeString = type != nil ? type! : ""
+        let attibutedString = NSMutableAttributedString(string: name ?? "", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .bold)])
+        attibutedString.append(NSAttributedString(string: "\n\(typeString)", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .heavy)]))
+        return CardViewModel(images: [imageUrl1 ?? ""], text: attibutedString, textAlignment: .left)
     }
 }

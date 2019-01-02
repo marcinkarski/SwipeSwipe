@@ -23,6 +23,7 @@
 		2E781D6921B73617003E102A /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E781D6821B73617003E102A /* TextField.swift */; };
 		2E7935E521A8ADEF00C642F6 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7935E421A8ADEF00C642F6 /* Place.swift */; };
 		2EB880F421D556080046A83D /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB880F321D556080046A83D /* Bindable.swift */; };
+		2EB880F621DD65F70046A83D /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB880F521DD65F70046A83D /* SettingsController.swift */; };
 		AF4E13D816C613C5C3BC9CFD /* Pods_SwipeSwipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27ABCC29A7467AF8ABF6CDB /* Pods_SwipeSwipe.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		2E781D6821B73617003E102A /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		2E7935E421A8ADEF00C642F6 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		2EB880F321D556080046A83D /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Bindable.swift; path = SwipeSwipe/Bindable.swift; sourceTree = SOURCE_ROOT; };
+		2EB880F521DD65F70046A83D /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		B27ABCC29A7467AF8ABF6CDB /* Pods_SwipeSwipe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwipeSwipe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1B6FE131A1409F9A082128B /* Pods-SwipeSwipe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwipeSwipe.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwipeSwipe/Pods-SwipeSwipe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				2E5BA66521A472F700137DE5 /* HomeController.swift */,
+				2EB880F521DD65F70046A83D /* SettingsController.swift */,
 				2E781D6621B7243B003E102A /* RegistrationController.swift */,
 			);
 			path = Controllers;
@@ -315,6 +318,7 @@
 				2E60658121A5E018005AF201 /* BottomControls.swift in Sources */,
 				2E5BF46021AEE7EA0009BA15 /* CardViewModel.swift in Sources */,
 				2E5BA66421A472F700137DE5 /* AppDelegate.swift in Sources */,
+				2EB880F621DD65F70046A83D /* SettingsController.swift in Sources */,
 				2E60658621A5FE1B005AF201 /* CardView.swift in Sources */,
 				2E781D6721B7243B003E102A /* RegistrationController.swift in Sources */,
 				2E7935E521A8ADEF00C642F6 /* Place.swift in Sources */,
