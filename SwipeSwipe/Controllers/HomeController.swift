@@ -62,8 +62,9 @@ class HomeController: UIViewController {
     }
     
     @objc private func handleSettings() {
-        let registrationController = RegistrationController()
-        present(registrationController, animated: true, completion: nil)
+        let settingsController = SettingsController()
+        let navController = UINavigationController(rootViewController: settingsController)
+        present(navController, animated: true, completion: nil)
     }
     
     private func setupCards() {
