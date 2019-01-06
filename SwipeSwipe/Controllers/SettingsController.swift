@@ -35,11 +35,28 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         return button
     }
     
+    lazy var header: UIView = {
+        let header = UIView()
+        let stackView = UIStackView(arrangedSubviews: [image1Button, image2Button])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        let padding: CGFloat = 16
+        stackView.spacing = padding
+        header.addSubview(stackView)
+        stackView.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: padding).isActive = true
+        stackView.topAnchor.constraint(equalTo: header.topAnchor, constant: padding).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -padding).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: header.bottomAnchor, constant: -padding).isActive = true
+        return header
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .interactive
     }
     
     private func setupNavigationBar() {
@@ -54,25 +71,40 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     }
 }
 
+class HeaderLabel: UILabel {
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.insetBy(dx: 16, dy: 0))
+    }
+}
+
 extension SettingsController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView()
-        let stackView = UIStackView(arrangedSubviews: [image1Button, image2Button])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        let padding: CGFloat = 16
-        stackView.spacing = padding
-        header.addSubview(stackView)
-        stackView.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: padding).isActive = true
-        stackView.topAnchor.constraint(equalTo: header.topAnchor, constant: padding).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -padding).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: header.bottomAnchor, constant: -padding).isActive = true
-        return header
+        if section == 0 {
+            return header
+        }
+        let label = HeaderLabel()
+        label.text = "Name"
+        return label
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 300
+        if section == 0 {
+            return 300
+        }
+        return 40
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 0 : 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = SettingsInputCell(style: .default, reuseIdentifier: nil)
+        return cell
     }
 }
