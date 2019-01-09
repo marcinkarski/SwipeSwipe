@@ -3,15 +3,17 @@ import UIKit
 struct Place: MakeCardViewModel {
     let uid: String
     var imageUrl1: String?
+    var imageUrl2: String?
     var name: String?
     var type: String?
     
     init(dictionary: [String: Any]) {
         
         self.uid = dictionary["uid"] as? String ?? ""
-        self.imageUrl1 = dictionary["imageUrl1"] as? String ?? ""
-        self.name = dictionary["name"] as? String ?? ""
-        self.type = dictionary["type"] as? String ?? ""
+        self.imageUrl1 = dictionary["imageUrl1"] as? String
+        self.imageUrl2 = dictionary["imageUrl2"] as? String
+        self.name = dictionary["name"] as? String
+        self.type = dictionary["type"] as? String
     }
     
     func toCardViewModel() -> CardViewModel {

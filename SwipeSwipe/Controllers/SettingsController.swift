@@ -1,4 +1,7 @@
 import UIKit
+import Firebase
+import SDWebImage
+import JGProgressHUD
 
 class ImagePickerController: UIImagePickerController {
     var imageButton: UIButton?
@@ -20,6 +23,35 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         let selectedImage = info[.originalImage] as? UIImage
         (picker as? ImagePickerController)?.imageButton?.setImage(selectedImage?.withRenderingMode(.alwaysOriginal), for: .normal)
         dismiss(animated: true)
+        let filename = UUID().uuidString
+        let hud = JGProgressHUD(style: .light)
+        hud.textLabel.text = "Uploading image"
+        hud.show(in: view)
+        guard let uploadData = selectedImage?.jpegData(compressionQuality: 0.75) else { return }
+        let reference = Storage.storage().reference(withPath: "/images/\(filename)")
+        reference.putData(uploadData, metadata: nil) { (nil, error) in
+            if let error = error {
+                hud.dismiss()
+                print("Failed to upload image", error)
+                return
+            }
+            print("Uploaded image")
+            reference.downloadURL(completion: { (url, error) in
+                hud.dismiss()
+                if let error = error {
+                    print("Can't retreive url", error)
+                    return
+                }
+                print("Finished getting url", url?.absoluteString ?? "")
+                if selectedImage == self.image1Button {
+                    self.place?.imageUrl1 = url?.absoluteString
+                } else if selectedImage == self.image2Button {
+                    self.place?.imageUrl2 = url?.absoluteString
+                }
+                self.place?.imageUrl1 = url?.absoluteString
+                self.place?.imageUrl2 = url?.absoluteString
+            })
+        }
     }
     
     private func createButton(selector: Selector) -> UIButton {
@@ -57,17 +89,63 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .interactive
+        fetchCurrentUser()
+    }
+    
+    var place: Place?
+    
+    private func fetchCurrentUser() {
+        guard let currentUser = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("users").document(currentUser).getDocument { (snapshot, error) in
+            if let error = error {
+                print(error)
+            }
+            guard let dictionary = snapshot?.data() else { return }
+            self.place = Place(dictionary: dictionary)
+            self.loadPlacePhotos()
+            self.tableView.reloadData()
+        }
+    }
+    
+    private func loadPlacePhotos() {
+        if let imageUrl = place?.imageUrl1, let url = URL(string: imageUrl) {
+            SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+                self.image1Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
+        }
+        if let imageUrl = place?.imageUrl2, let url = URL(string: imageUrl) {
+            SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+                self.image2Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
+        }
     }
     
     private func setupNavigationBar() {
         self.title = "Settings"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleCancel)), UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleCancel))]
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave)), UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleCancel))]
     }
     
     @objc private func handleCancel() {
         dismiss(animated: true)
+    }
+    
+    @objc private func handleSave() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let docData = ["uid": uid, "name": place?.name ?? "", "imageUrl1": place?.imageUrl1 ?? "", "imageUrl2": place?.imageUrl2 ?? "", "type": place?.type ?? ""]
+        let hud = JGProgressHUD(style: .light)
+        hud.textLabel.text = "Saving data"
+        hud.show(in: view)
+        Firestore.firestore().collection("users").document(uid).setData(docData) { (error) in
+            hud.dismiss(animated: true)
+            if let error = error {
+                print("Failed to save", error)
+                return
+            }
+            print("Saved")
+            self.dismiss(animated: true)
+        }
     }
 }
 
@@ -84,7 +162,14 @@ extension SettingsController {
             return header
         }
         let label = HeaderLabel()
-        label.text = "Name"
+        switch section {
+        case 1:
+            label.text = "Name"
+        case 2:
+            label.text = "Type"
+        default:
+            break
+        }
         return label
     }
     
@@ -96,7 +181,7 @@ extension SettingsController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,6 +190,26 @@ extension SettingsController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SettingsInputCell(style: .default, reuseIdentifier: nil)
+        switch indexPath.section {
+        case 1:
+            cell.textField.placeholder = "Enter name"
+            cell.textField.text = place?.name
+            cell.textField.addTarget(self, action: #selector(handleNameChange), for: .editingChanged)
+        case 2:
+            cell.textField.placeholder = "Enter type"
+            cell.textField.text = place?.type
+            cell.textField.addTarget(self, action: #selector(handleTypeChange), for: .editingChanged)
+        default:
+            break
+        }
         return cell
+    }
+    
+    @objc private func handleNameChange(textField: UITextField) {
+        self.place?.name = textField.text
+    }
+    
+    @objc private func handleTypeChange(textField: UITextField) {
+        self.place?.type = textField.text
     }
 }
