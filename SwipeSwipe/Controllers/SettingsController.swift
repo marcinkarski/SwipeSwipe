@@ -21,7 +21,8 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let selectedImage = info[.originalImage] as? UIImage
-        (picker as? ImagePickerController)?.imageButton?.setImage(selectedImage?.withRenderingMode(.alwaysOriginal), for: .normal)
+        let imageButton = (picker as? ImagePickerController)?.imageButton
+        imageButton?.setImage(selectedImage?.withRenderingMode(.alwaysOriginal), for: .normal)
         dismiss(animated: true)
         let filename = UUID().uuidString
         let hud = JGProgressHUD(style: .light)
@@ -43,13 +44,13 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
                     return
                 }
                 print("Finished getting url", url?.absoluteString ?? "")
-                if selectedImage == self.image1Button {
+                if imageButton == self.image1Button {
                     self.place?.imageUrl1 = url?.absoluteString
-                } else if selectedImage == self.image2Button {
+                } else {
                     self.place?.imageUrl2 = url?.absoluteString
                 }
-                self.place?.imageUrl1 = url?.absoluteString
-                self.place?.imageUrl2 = url?.absoluteString
+//                self.place?.imageUrl1 = url?.absoluteString
+//                self.place?.imageUrl2 = url?.absoluteString
             })
         }
     }
@@ -99,6 +100,7 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         Firestore.firestore().collection("users").document(currentUser).getDocument { (snapshot, error) in
             if let error = error {
                 print(error)
+                return
             }
             guard let dictionary = snapshot?.data() else { return }
             self.place = Place(dictionary: dictionary)
