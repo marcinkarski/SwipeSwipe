@@ -87,7 +87,6 @@ class HomeController: UIViewController {
         NSLayoutConstraint.activate([stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor), stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor), stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor), stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = .init(top: 0, left: 8, bottom: 0, right: 8)
-        
         stackView.bringSubviewToFront(cardDeckView)
     }
 }

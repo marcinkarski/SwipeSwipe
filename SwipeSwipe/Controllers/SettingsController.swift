@@ -169,9 +169,12 @@ extension SettingsController {
             label.text = "Name"
         case 2:
             label.text = "Type"
+        case 3:
+            label.text = "Age"
         default:
             break
         }
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         return label
     }
     
@@ -183,14 +186,29 @@ extension SettingsController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == 0 ? 0 : 1
     }
     
+    @objc private func handleMinAge(slider: UISlider) {
+        print(slider.value)
+    }
+    
+    @objc private func handleMaxAge(slider: UISlider) {
+        print(slider.value)
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 3 {
+            let ageRangeCell = AgeRangeCell(style: .default, reuseIdentifier: nil)
+            ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAge), for: .valueChanged)
+            ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAge), for: .valueChanged)
+            return ageRangeCell
+        }
+        
         let cell = SettingsInputCell(style: .default, reuseIdentifier: nil)
         switch indexPath.section {
         case 1:

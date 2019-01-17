@@ -25,7 +25,8 @@
 		2EB880F421D556080046A83D /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB880F321D556080046A83D /* Bindable.swift */; };
 		2EB880F621DD65F70046A83D /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB880F521DD65F70046A83D /* SettingsController.swift */; };
 		2EB8812421E01D3E0046A83D /* SettingsInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB8812321E01D3E0046A83D /* SettingsInputCell.swift */; };
-		AF4E13D816C613C5C3BC9CFD /* Pods_SwipeSwipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27ABCC29A7467AF8ABF6CDB /* Pods_SwipeSwipe.framework */; };
+		2ECADA9921F11EEB0006C34C /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECADA9821F11EEB0006C34C /* AgeRangeCell.swift */; };
+		AF4E13D816C613C5C3BC9CFD /* Pods_SwipeSwipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27ABCC29A7467AF8ABF6CDB /* Pods_SwipeSwipe.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		2EB880F321D556080046A83D /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Bindable.swift; path = SwipeSwipe/Bindable.swift; sourceTree = SOURCE_ROOT; };
 		2EB880F521DD65F70046A83D /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		2EB8812321E01D3E0046A83D /* SettingsInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInputCell.swift; sourceTree = "<group>"; };
+		2ECADA9821F11EEB0006C34C /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
 		B27ABCC29A7467AF8ABF6CDB /* Pods_SwipeSwipe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwipeSwipe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1B6FE131A1409F9A082128B /* Pods-SwipeSwipe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwipeSwipe.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwipeSwipe/Pods-SwipeSwipe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +118,7 @@
 			children = (
 				2E781D6821B73617003E102A /* TextField.swift */,
 				2EB8812321E01D3E0046A83D /* SettingsInputCell.swift */,
+				2ECADA9821F11EEB0006C34C /* AgeRangeCell.swift */,
 				2E60658321A5E72E005AF201 /* TopNavigation.swift */,
 				2E60658021A5E018005AF201 /* BottomControls.swift */,
 				2E60658521A5FE1B005AF201 /* CardView.swift */,
@@ -318,6 +321,7 @@
 				2E781D6921B73617003E102A /* TextField.swift in Sources */,
 				2E60658421A5E72E005AF201 /* TopNavigation.swift in Sources */,
 				2E5BF46221AF45830009BA15 /* Advert.swift in Sources */,
+				2ECADA9921F11EEB0006C34C /* AgeRangeCell.swift in Sources */,
 				2E60658821A725B9005AF201 /* UIView.swift in Sources */,
 				2E60658121A5E018005AF201 /* BottomControls.swift in Sources */,
 				2E5BF46021AEE7EA0009BA15 /* CardViewModel.swift in Sources */,
@@ -463,6 +467,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D5A686292575C5415A0149D /* Pods-SwipeSwipe.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HS5M46ZGSH;
@@ -482,6 +487,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C1B6FE131A1409F9A082128B /* Pods-SwipeSwipe.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HS5M46ZGSH;
