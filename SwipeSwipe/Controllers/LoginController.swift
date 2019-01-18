@@ -1,11 +1,3 @@
-//
-//  LoginController.swift
-//  SwipeMatchFirestoreLBTA
-//
-//  Created by Brian Voong on 11/26/18.
-//  Copyright © 2018 Brian Voong. All rights reserved.
-//
-
 import UIKit
 import JGProgressHUD
 
@@ -18,30 +10,30 @@ class LoginController: UIViewController {
     var delegate: LoginControllerDelegate?
     
     let emailTextField: TextField = {
-        let tf = TextField(padding: 24)
-        tf.placeholder = "Enter email"
-        tf.keyboardType = .emailAddress
-        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
-        return tf
+        let textField = TextField(padding: 24)
+        textField.placeholder = "Enter email"
+        textField.keyboardType = .emailAddress
+        textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+        return textField
     }()
     
     let passwordTextField: TextField = {
-        let tf = TextField(padding: 24)
-        tf.placeholder = "Enter password"
-        tf.isSecureTextEntry = true
-        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
-        return tf
+        let textField = TextField(padding: 24)
+        textField.placeholder = "Enter password"
+        textField.isSecureTextEntry = true
+        textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+        return textField
     }()
     
     lazy var verticalStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [
+        let stackView = UIStackView(arrangedSubviews: [
             emailTextField,
             passwordTextField,
             loginButton
             ])
-        sv.axis = .vertical
-        sv.spacing = 8
-        return sv
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        return stackView
     }()
     
     @objc fileprivate func handleTextChange(textField: UITextField) {
@@ -67,10 +59,10 @@ class LoginController: UIViewController {
     }()
     
     @objc fileprivate func handleLogin() {
-        loginViewModel.performLogin { (err) in
+        loginViewModel.performLogin { (error) in
             self.loginHUD.dismiss()
-            if let err = err {
-                print("Failed to log in:", err)
+            if let error = error {
+                print("Failed to log in:", error)
                 return
             }
             self.dismiss(animated: true, completion: {
@@ -97,7 +89,6 @@ class LoginController: UIViewController {
         
         setupGradientLayer()
         setupLayout()
-        
         setupBindables()
     }
     
@@ -131,7 +122,6 @@ class LoginController: UIViewController {
     fileprivate func setupGradientLayer() {
         let topColor = #colorLiteral(red: 0.9921568627, green: 0.3568627451, blue: 0.3725490196, alpha: 1)
         let bottomColor = #colorLiteral(red: 0.8980392157, green: 0, blue: 0.4470588235, alpha: 1)
-        // make sure to user cgColor
         gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
         gradientLayer.locations = [0, 1]
         view.layer.addSublayer(gradientLayer)

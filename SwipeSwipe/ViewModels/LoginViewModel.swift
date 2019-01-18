@@ -1,11 +1,3 @@
-//
-//  LoginViewModel.swift
-//  SwipeMatchFirestoreLBTA
-//
-//  Created by Brian Voong on 11/26/18.
-//  Copyright © 2018 Brian Voong. All rights reserved.
-//
-
 import Foundation
 import Firebase
 
