@@ -49,8 +49,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
                 } else {
                     self.place?.imageUrl2 = url?.absoluteString
                 }
-//                self.place?.imageUrl1 = url?.absoluteString
-//                self.place?.imageUrl2 = url?.absoluteString
             })
         }
     }
@@ -126,16 +124,24 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         self.title = "Settings"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave)), UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleCancel))]
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave)), UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))]
     }
     
     @objc private func handleCancel() {
         dismiss(animated: true)
     }
     
+    @objc private func handleLogout() {
+        try? Auth.auth().signOut()
+        dismiss(animated: true)
+    }
+    
     @objc private func handleSave() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let docData = ["uid": uid, "name": place?.name ?? "", "imageUrl1": place?.imageUrl1 ?? "", "imageUrl2": place?.imageUrl2 ?? "", "type": place?.type ?? ""]
+        let docData = ["uid": uid, "name": place?.name ?? "",
+                       "imageUrl1": place?.imageUrl1 ?? "",
+                       "imageUrl2": place?.imageUrl2 ?? "",
+                       "type": place?.type ?? ""]
         let hud = JGProgressHUD(style: .light)
         hud.textLabel.text = "Saving data"
         hud.show(in: view)
@@ -194,11 +200,17 @@ extension SettingsController {
     }
     
     @objc private func handleMinAge(slider: UISlider) {
-        print(slider.value)
+        let indexPath = IndexPath(row: 0, section: 3)
+        let ageRangeCell = tableView.cellForRow(at: indexPath) as! AgeRangeCell
+        ageRangeCell.minLabel.text = "Min: \(Int(slider.value))"
+        self.place?.minAge = Int(slider.value)
     }
     
     @objc private func handleMaxAge(slider: UISlider) {
-        print(slider.value)
+        let indexPath = IndexPath(row: 0, section: 3)
+        let ageRangeCell = tableView.cellForRow(at: indexPath) as! AgeRangeCell
+        ageRangeCell.maxLabel.text = "Max: \(Int(slider.value))"
+        self.place?.maxAge = Int(slider.value)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -206,6 +218,8 @@ extension SettingsController {
             let ageRangeCell = AgeRangeCell(style: .default, reuseIdentifier: nil)
             ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAge), for: .valueChanged)
             ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAge), for: .valueChanged)
+            ageRangeCell.minLabel.text = "Min: \(place?.minAge ?? -1)"
+            ageRangeCell.maxLabel.text = "Max: \(place?.maxAge ?? -1)"
             return ageRangeCell
         }
         

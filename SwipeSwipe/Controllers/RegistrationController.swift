@@ -29,7 +29,6 @@ class RegistrationController: UIViewController {
     let nameTextField: TextField = {
         let textField = TextField(padding: 16)
         textField.placeholder = "Enter full name"
-        textField.backgroundColor = .white
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()
@@ -37,7 +36,6 @@ class RegistrationController: UIViewController {
     let emailTextField: TextField = {
         let textField = TextField(padding: 16)
         textField.placeholder = "Enter email"
-        textField.backgroundColor = .white
         textField.keyboardType = .emailAddress
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
@@ -46,7 +44,6 @@ class RegistrationController: UIViewController {
     let passwordTextField: TextField = {
         let textField = TextField(padding: 16)
         textField.placeholder = "Enter password"
-        textField.backgroundColor = .white
         textField.isSecureTextEntry = true
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
@@ -77,6 +74,20 @@ class RegistrationController: UIViewController {
         button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
+    
+    let goToLoginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Go to Login", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        button.addTarget(self, action: #selector(handleGoToLogin), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc private func handleGoToLogin() {
+        let loginController = LoginController()
+        navigationController?.pushViewController(loginController, animated: true)
+    }
     
     let registerHUD = JGProgressHUD(style: .light)
     @objc private func handleRegister() {
@@ -183,13 +194,14 @@ class RegistrationController: UIViewController {
     lazy var stackView = UIStackView(arrangedSubviews: [selectPhotoButton, nameTextField, emailTextField, passwordTextField, registerButton])
     
     fileprivate func layout() {
+        navigationController?.isNavigationBarHidden = true
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+        goToLoginButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32), stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32), stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
+        view.addSubview(goToLoginButton)
+        NSLayoutConstraint.activate([stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32), stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32), stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor), goToLoginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor), goToLoginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor), goToLoginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
     }
     
     let gradient = CAGradientLayer()

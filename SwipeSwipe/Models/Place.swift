@@ -6,6 +6,8 @@ struct Place: MakeCardViewModel {
     var imageUrl2: String?
     var name: String?
     var type: String?
+    var minAge: Int?
+    var maxAge: Int?
     
     init(dictionary: [String: Any]) {
         
@@ -14,6 +16,8 @@ struct Place: MakeCardViewModel {
         self.imageUrl2 = dictionary["imageUrl2"] as? String
         self.name = dictionary["name"] as? String
         self.type = dictionary["type"] as? String
+        self.minAge = dictionary["minAge"] as? Int
+        self.maxAge = dictionary["maxAge"] as? Int
     }
     
     func toCardViewModel() -> CardViewModel {

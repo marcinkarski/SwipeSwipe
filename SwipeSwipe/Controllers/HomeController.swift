@@ -2,7 +2,7 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class HomeController: UIViewController {
+class HomeController: UIViewController, LoginControllerDelegate {
     
     private let topStackView = TopNavigation()
     private let cardDeckView = UIView()
@@ -22,16 +22,30 @@ class HomeController: UIViewController {
         bottomStackView.refreshButton.addTarget(self, action: #selector(handleRefreshButton), for: .touchUpInside)
         setup()
         setupCards()
-        fetchUsersFromFirestore()
+        fetchCurrentUser()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Auth.auth().currentUser == nil {
+            let loginController = LoginController()
+            loginController.delegate = self
+            let navController = UINavigationController(rootViewController: loginController)
+            present(navController, animated: true, completion: nil)            
+        }
+    }
+    
+    func didFinishLoggingIn() {
+        fetchCurrentUser()
     }
     
     @objc private func handleRefreshButton() {
-        fetchUsersFromFirestore()
+        fetchCurrentUser()
     }
     
     var lastFetchedPlace: Place?
     
-    private func fetchUsersFromFirestore() {
+    private func fetchCurrentUser() {
         let hud = JGProgressHUD(style: .light)
         hud.textLabel.text = "Fetching places"
         hud.show(in: view)
