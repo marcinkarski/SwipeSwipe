@@ -2,31 +2,12 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class RegistrationController: UIViewController {
+class RegistrationTextView: UIView {
     
-    let registrationViewModel = RegistrationViewModel()
+    private let registrationViewModel = RegistrationViewModel()
+    private lazy var stackView = UIStackView(arrangedSubviews: [nameTextField, emailTextField, passwordTextField])
     
-    let selectPhotoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Select Photo", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        button.backgroundColor = .white
-        button.setTitleColor(.black, for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        button.layer.cornerRadius = 16
-        button.imageView?.contentMode = .scaleAspectFill
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc private func handleSelectPhoto() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        present(imagePicker, animated: true)
-    }
-    
-    let nameTextField: TextField = {
+    private let nameTextField: TextField = {
         let textField = TextField(padding: 16)
         textField.placeholder = "Enter full name"
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
@@ -61,6 +42,81 @@ class RegistrationController: UIViewController {
             break
         }
     }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stackView)
+        stackView.fillSuperview()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class RegistrationController: UIViewController {
+    
+    let registrationViewModel = RegistrationViewModel()
+    private lazy var registrationTextView = RegistrationTextView()
+    
+    let selectPhotoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Select Photo", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        button.backgroundColor = .white
+        button.setTitleColor(.black, for: .normal)
+        button.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        button.layer.cornerRadius = 16
+        button.imageView?.contentMode = .scaleAspectFill
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc private func handleSelectPhoto() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        present(imagePicker, animated: true)
+    }
+    
+//    let nameTextField: TextField = {
+//        let textField = TextField(padding: 16)
+//        textField.placeholder = "Enter full name"
+//        textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+//        return textField
+//    }()
+//
+//    let emailTextField: TextField = {
+//        let textField = TextField(padding: 16)
+//        textField.placeholder = "Enter email"
+//        textField.keyboardType = .emailAddress
+//        textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+//        return textField
+//    }()
+//
+//    let passwordTextField: TextField = {
+//        let textField = TextField(padding: 16)
+//        textField.placeholder = "Enter password"
+//        textField.isSecureTextEntry = true
+//        textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
+//        return textField
+//    }()
+//
+//    @objc private func handleTextChange(textField: UITextField) {
+//        switch textField {
+//        case nameTextField:
+//            registrationViewModel.name = textField.text
+//        case emailTextField:
+//            registrationViewModel.email = textField.text
+//        case passwordTextField:
+//            registrationViewModel.password = textField.text
+//        default:
+//            break
+//        }
+//    }
     
     let registerButton: UIButton = {
         let button = UIButton(type: .system)
@@ -191,7 +247,7 @@ class RegistrationController: UIViewController {
         self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
     }
     
-    lazy var stackView = UIStackView(arrangedSubviews: [selectPhotoButton, nameTextField, emailTextField, passwordTextField, registerButton])
+    lazy var stackView = UIStackView(arrangedSubviews: [selectPhotoButton, registrationTextView, registerButton])
     
     fileprivate func layout() {
         navigationController?.isNavigationBarHidden = true
