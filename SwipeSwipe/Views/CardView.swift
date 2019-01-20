@@ -2,7 +2,7 @@ import UIKit
 import SDWebImage
 
 protocol CardViewDelegate {
-    func didTapInfo()
+    func didTapInfo(viewModel: CardViewModel)
 }
 
 class CardView: UIView {
@@ -17,8 +17,8 @@ class CardView: UIView {
                 imageView.sd_setImage(with: url)
             }
             
-            label.attributedText = cardViewModel.text
-            label.textAlignment = cardViewModel.alignment
+            label.attributedText = cardViewModel.attributedString
+            label.textAlignment = cardViewModel.textAlignment
             
             (0..<cardViewModel.images.count).forEach { (_) in
                 let barView = UIView()
@@ -80,7 +80,7 @@ class CardView: UIView {
     }()
     
     @objc private func handleInfoButton() {
-        delegate?.didTapInfo()
+        delegate?.didTapInfo(viewModel: self.cardViewModel)
     }
     
     override init(frame: CGRect) {

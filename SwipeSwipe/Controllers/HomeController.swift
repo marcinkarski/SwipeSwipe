@@ -78,9 +78,10 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         cardView.fillSuperview()
     }
     
-    func didTapInfo() {
-        let controller = DetailController()
-        present(controller, animated: true, completion: nil)
+    func didTapInfo(viewModel: CardViewModel) {
+        let detailController = DetailController()
+        detailController.viewModel = viewModel
+        present(detailController, animated: true, completion: nil)
     }
     
     @objc private func handleSettings() {

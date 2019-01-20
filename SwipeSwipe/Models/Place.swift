@@ -27,6 +27,6 @@ struct Place: MakeCardViewModel {
         var images = [String]()
         if let url = imageUrl1 { images.append(url) }
         if let url = imageUrl2 { images.append(url) }
-        return CardViewModel(images: images, text: attibutedString, textAlignment: .left)
+        return CardViewModel(images: images, attributedString: attibutedString, textAlignment: .left)
     }
 }

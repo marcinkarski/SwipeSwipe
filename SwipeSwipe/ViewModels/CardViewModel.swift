@@ -6,13 +6,13 @@ protocol MakeCardViewModel {
 
 class CardViewModel {
     let images: [String]
-    let text: NSAttributedString
-    let alignment: NSTextAlignment
+    let attributedString: NSAttributedString
+    let textAlignment: NSTextAlignment
     
-    init(images: [String], text: NSAttributedString, textAlignment: NSTextAlignment) {
+    init(images: [String], attributedString: NSAttributedString, textAlignment: NSTextAlignment) {
         self.images = images
-        self.text = text
-        self.alignment = textAlignment
+        self.attributedString = attributedString
+        self.textAlignment = textAlignment
     }
     
     private var imageIndex = 0 {
@@ -32,6 +32,4 @@ class CardViewModel {
     func goToPreviousPhoto() {
         imageIndex = max(0, imageIndex - 1)
     }
-    
-
 }
