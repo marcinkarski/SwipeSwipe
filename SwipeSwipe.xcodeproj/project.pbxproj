@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E24C2E121F4F40D001EA54B /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E24C2E021F4F40D001EA54B /* DetailController.swift */; };
 		2E2C4A6F21D42607007D5F0A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2E2C4A6E21D42607007D5F0A /* GoogleService-Info.plist */; };
 		2E5231B621D28D7900A6C487 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5231B521D28D7900A6C487 /* RegistrationViewModel.swift */; };
 		2E5BA66421A472F700137DE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5BA66321A472F700137DE5 /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		1D5A686292575C5415A0149D /* Pods-SwipeSwipe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwipeSwipe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwipeSwipe/Pods-SwipeSwipe.debug.xcconfig"; sourceTree = "<group>"; };
+		2E24C2E021F4F40D001EA54B /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		2E2C4A6E21D42607007D5F0A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2E5231B521D28D7900A6C487 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationViewModel.swift; path = SwipeSwipe/ViewModels/RegistrationViewModel.swift; sourceTree = SOURCE_ROOT; };
 		2E5BA66021A472F700137DE5 /* SwipeSwipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwipeSwipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				2E5F7E4D21F258B300B3D767 /* LoginController.swift */,
+				2E24C2E021F4F40D001EA54B /* DetailController.swift */,
 				2E5BA66521A472F700137DE5 /* HomeController.swift */,
 				2EB880F521DD65F70046A83D /* SettingsController.swift */,
 				2E781D6621B7243B003E102A /* RegistrationController.swift */,
@@ -327,6 +330,7 @@
 				2E781D6921B73617003E102A /* TextField.swift in Sources */,
 				2E60658421A5E72E005AF201 /* TopNavigation.swift in Sources */,
 				2E5BF46221AF45830009BA15 /* Advert.swift in Sources */,
+				2E24C2E121F4F40D001EA54B /* DetailController.swift in Sources */,
 				2ECADA9921F11EEB0006C34C /* AgeRangeCell.swift in Sources */,
 				2E5F7E5021F258BC00B3D767 /* LoginViewModel.swift in Sources */,
 				2E60658821A725B9005AF201 /* UIView.swift in Sources */,

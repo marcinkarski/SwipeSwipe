@@ -79,8 +79,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     }
     
     func didTapInfo() {
-        let controller = UIViewController()
-        controller.view.backgroundColor = .red
+        let controller = DetailController()
         present(controller, animated: true, completion: nil)
     }
     
