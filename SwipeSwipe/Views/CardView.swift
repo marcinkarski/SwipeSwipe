@@ -1,7 +1,13 @@
 import UIKit
 import SDWebImage
 
+protocol CardViewDelegate {
+    func didTapInfo()
+}
+
 class CardView: UIView {
+    
+    var delegate: CardViewDelegate?
     
     var cardViewModel: CardViewModel! {
         didSet {
@@ -62,6 +68,21 @@ class CardView: UIView {
         return label
     }()
     
+    private let infoButton: UIButton = {
+        let button = UIButton(type: .system)
+        let infoImage = UIImage(named: "info_icon")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(infoImage?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.layer.cornerRadius = 20
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleInfoButton), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc private func handleInfoButton() {
+        delegate?.didTapInfo()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 12
@@ -72,9 +93,9 @@ class CardView: UIView {
         setupPageControl()
         addSubview(label)
         imageView.fillSuperview()
+        addSubview(infoButton)
         
-        
-        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16), label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)])
+        NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16), label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16), infoButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16), infoButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16), infoButton.widthAnchor.constraint(equalToConstant: 40), infoButton.heightAnchor.constraint(equalToConstant: 40)])
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)

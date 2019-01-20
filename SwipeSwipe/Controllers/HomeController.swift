@@ -2,8 +2,8 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class HomeController: UIViewController, LoginControllerDelegate {
-    
+class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegate {
+
     private let topStackView = TopNavigation()
     private let cardDeckView = UIView()
     private let bottomStackView = BottomControls()
@@ -59,9 +59,11 @@ class HomeController: UIViewController, LoginControllerDelegate {
             snapshot?.documents.forEach({ (documentSnapshot) in
                 let userDictionary = documentSnapshot.data()
                 let place = Place(dictionary: userDictionary)
-                self.viewModel.append(place.toCardViewModel())
-                self.lastFetchedPlace = place
-                self.setupCardFromPlace(place: place)
+                if place.uid != Auth.auth().currentUser?.uid {
+                    self.setupCardFromPlace(place: place)
+                }
+//                self.viewModel.append(place.toCardViewModel())
+//                self.lastFetchedPlace = place
             })
 //            self.setupCards()
         }
@@ -69,10 +71,17 @@ class HomeController: UIViewController, LoginControllerDelegate {
     
     private func setupCardFromPlace(place: Place) {
         let cardView = CardView(frame: .zero)
+        cardView.delegate = self
         cardView.cardViewModel = place.toCardViewModel()
         cardDeckView.addSubview(cardView)
         cardDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
+    }
+    
+    func didTapInfo() {
+        let controller = UIViewController()
+        controller.view.backgroundColor = .red
+        present(controller, animated: true, completion: nil)
     }
     
     @objc private func handleSettings() {
