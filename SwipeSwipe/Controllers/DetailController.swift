@@ -5,8 +5,9 @@ class DetailController: UIViewController {
     var viewModel: CardViewModel! {
         didSet {
             label.attributedText = viewModel.attributedString
-            guard let imageUrl = viewModel.images.first, let url = URL(string: imageUrl) else { return }
-            imageView.sd_setImage(with: url, completed: nil)
+            swipePhotosController.viewModel = viewModel
+//            guard let imageUrl = viewModel.images.first, let url = URL(string: imageUrl) else { return }
+//            imageView.sd_setImage(with: url, completed: nil)
         }
     }
     
@@ -20,13 +21,15 @@ class DetailController: UIViewController {
         return scrollView
     }()
     
-    lazy private var imageView: UIImageView = {
-        let image = UIImage(named: "img2")
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        return imageView
-    }()
+//    lazy private var imageView: UIImageView = {
+//        let image = UIImage(named: "img2")
+//        let imageView = UIImageView(image: image)
+//        imageView.contentMode = .scaleAspectFill
+//        imageView.clipsToBounds = true
+//        return imageView
+//    }()
+    
+    let swipePhotosController = SwipePhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     lazy private var label: UILabel = {
         let label = UILabel()
@@ -74,12 +77,19 @@ class DetailController: UIViewController {
         super.viewDidLoad()
         view.addSubview(scrollView)
         scrollView.fillSuperview()
+        let imageView = swipePhotosController.view!
         scrollView.addSubview(imageView)
-        imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width)
+//        imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width)
         scrollView.addSubview(label)
         scrollView.addSubview(dismissButton)
         NSLayoutConstraint.activate([label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16), label.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16), label.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor), dismissButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -25), dismissButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -16)])
         setupBottomControlls()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let imageView = swipePhotosController.view!
+        imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width)
     }
     
     private func setupBottomControlls() {
@@ -104,6 +114,7 @@ extension DetailController: UIScrollViewDelegate {
         var width = view.frame.width + changeY * 2
         width = max(view.frame.width, width)
         let origin = min(0, -changeY)
+        let imageView = swipePhotosController.view!
         imageView.frame = CGRect(x: origin, y: origin, width: width, height: width)
     }
 }

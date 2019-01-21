@@ -1,13 +1,24 @@
 import UIKit
 
 class SwipePhotosController: UIPageViewController {
+    
+    var viewModel: CardViewModel! {
+        didSet {
+            controllers = viewModel.images.map({ (image) -> UIViewController in
+                let photoController = PhotoController(imageUrl: image)
+                return photoController
+            })
+            setViewControllers([controllers.first!], direction: .forward, animated: false, completion: nil)
+        }
+    }
 
-    let controllers = [PhotoController(image: #imageLiteral(resourceName: "img2")), PhotoController(image: #imageLiteral(resourceName: "img5")), PhotoController(image: #imageLiteral(resourceName: "img3"))]
+    var controllers = [UIViewController]()
+//    let controllers = [PhotoController(image: #imageLiteral(resourceName: "img2")), PhotoController(image: #imageLiteral(resourceName: "img5")), PhotoController(image: #imageLiteral(resourceName: "img3"))]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
-        setViewControllers([controllers.first!], direction: .forward, animated: false, completion: nil)
+//        setViewControllers([controllers.first!], direction: .forward, animated: false, completion: nil)
     }
 }
 
@@ -29,8 +40,10 @@ class PhotoController: UIViewController {
     
     let imageView = UIImageView(image: #imageLiteral(resourceName: "img3"))
     
-    init(image: UIImage) {
-        imageView.image = image
+    init(imageUrl: String) {
+        if let url = URL(string: imageUrl) {
+            imageView.sd_setImage(with: url)
+        }
         super.init(nibName: nil, bundle: nil)
     }
     
