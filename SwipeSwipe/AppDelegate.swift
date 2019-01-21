@@ -13,9 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewController = HomeController()
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = viewController
+//        window?.rootViewController = viewController
+        window?.rootViewController = SwipePhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         window?.makeKeyAndVisible()
-        
         return true
     }
     
