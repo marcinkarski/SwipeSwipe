@@ -6,8 +6,6 @@ class DetailController: UIViewController {
         didSet {
             label.attributedText = viewModel.attributedString
             swipePhotosController.viewModel = viewModel
-//            guard let imageUrl = viewModel.images.first, let url = URL(string: imageUrl) else { return }
-//            imageView.sd_setImage(with: url, completed: nil)
         }
     }
     
@@ -20,15 +18,7 @@ class DetailController: UIViewController {
         scrollView.backgroundColor = .white
         return scrollView
     }()
-    
-//    lazy private var imageView: UIImageView = {
-//        let image = UIImage(named: "img2")
-//        let imageView = UIImageView(image: image)
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.clipsToBounds = true
-//        return imageView
-//    }()
-    
+
     let swipePhotosController = SwipePhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
     lazy private var label: UILabel = {

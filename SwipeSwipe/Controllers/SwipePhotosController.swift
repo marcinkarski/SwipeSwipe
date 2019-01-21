@@ -9,16 +9,31 @@ class SwipePhotosController: UIPageViewController {
                 return photoController
             })
             setViewControllers([controllers.first!], direction: .forward, animated: false, completion: nil)
+            setupBars()
         }
+    }
+    
+    private let stackViewBars = UIStackView(arrangedSubviews: [])
+    
+    private func setupBars() {
+        viewModel.images.forEach { (_) in
+            let barView = UIView()
+            barView.backgroundColor = .white
+            stackViewBars.addArrangedSubview(barView)
+            stackViewBars.translatesAutoresizingMaskIntoConstraints = false
+            stackViewBars.spacing = 8
+            stackViewBars.distribution = .fillEqually
+        }
+        view.addSubview(stackViewBars)
+        NSLayoutConstraint.activate([stackViewBars.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16), stackViewBars.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16), stackViewBars.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                                     stackViewBars.heightAnchor.constraint(equalToConstant: 2)])
     }
 
     var controllers = [UIViewController]()
-//    let controllers = [PhotoController(image: #imageLiteral(resourceName: "img2")), PhotoController(image: #imageLiteral(resourceName: "img5")), PhotoController(image: #imageLiteral(resourceName: "img3"))]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
-//        setViewControllers([controllers.first!], direction: .forward, animated: false, completion: nil)
     }
 }
 
