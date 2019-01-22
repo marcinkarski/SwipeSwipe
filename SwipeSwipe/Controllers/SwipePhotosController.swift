@@ -31,9 +31,49 @@ class SwipePhotosController: UIPageViewController {
 
     var controllers = [UIViewController]()
     
+    private let isCardCardViewMode: Bool
+    
+    init(isCardCardViewMode: Bool = false) {
+        self.isCardCardViewMode = isCardCardViewMode
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
+        
+        if isCardCardViewMode {
+            disableSwiping()
+        }
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+    }
+    
+    @objc private func handleTap(gesture: UITapGestureRecognizer) {
+        let currentController = viewControllers!.first!
+        if let index = controllers.firstIndex(of: currentController) {
+            if gesture.location(in: self.view).x > view.frame.width / 2 {
+                
+                let nextIndex = min(index + 1, controllers.count - 1)
+                let nextController = controllers[nextIndex]
+                setViewControllers([nextController], direction: .forward, animated: false, completion: nil)
+            } else {
+                let prevIndex = max(0, index - 1)
+                let prevController = controllers[prevIndex]
+                setViewControllers([prevController], direction: .forward, animated: false, completion: nil)
+            }
+        }
+    }
+    
+    private func disableSwiping() {
+        view.subviews.forEach { (view) in
+            if let view = view as? UIScrollView {
+                view.isScrollEnabled = false
+            }
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

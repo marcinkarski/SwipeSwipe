@@ -19,7 +19,7 @@ class DetailController: UIViewController {
         return scrollView
     }()
 
-    let swipePhotosController = SwipePhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+    let swipePhotosController = SwipePhotosController()
     
     lazy private var label: UILabel = {
         let label = UILabel()

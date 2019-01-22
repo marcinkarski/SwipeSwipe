@@ -11,11 +11,12 @@ class CardView: UIView {
     
     var cardViewModel: CardViewModel! {
         didSet {
-            let imageName = cardViewModel.images.first ?? ""
+//            let imageName = cardViewModel.images.first ?? ""
 //            imageView.image = UIImage(named: imageName)
-            if let url = URL(string: imageName) {
-                imageView.sd_setImage(with: url)
-            }
+//            if let url = URL(string: imageName) {
+//                imageView.sd_setImage(with: url)
+//            }
+            pageController.viewModel = cardViewModel
             
             label.attributedText = cardViewModel.attributedString
             label.textAlignment = cardViewModel.textAlignment
@@ -32,9 +33,9 @@ class CardView: UIView {
     
     private func setupImageIndexObserver() {
         cardViewModel.imageIndexObserver = { [unowned self] (index, imageUrl) in
-            if let url = URL(string: imageUrl ?? "") {
-                self.imageView.sd_setImage(with: url)
-            }
+//            if let url = URL(string: imageUrl ?? "") {
+//                self.imageView.sd_setImage(with: url)
+//            }
             self.pageControl.arrangedSubviews.forEach({ (view) in
                 view.backgroundColor = self.barDeselectedColour
             })
@@ -53,12 +54,14 @@ class CardView: UIView {
         return pageControl
     }()
     
-    private let imageView: UIImageView = {
-        let image = UIImage(named: "img1")
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
+//    private let imageView: UIImageView = {
+//        let image = UIImage(named: "img1")
+//        let imageView = UIImageView(image: image)
+//        imageView.contentMode = .scaleAspectFill
+//        return imageView
+//    }()
+    
+    private let pageController = SwipePhotosController(isCardCardViewMode: true)
  
     private let label: UILabel = {
         let label = UILabel()
@@ -85,14 +88,17 @@ class CardView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        let pagePhotosView = pageController.view!
+        
         layer.cornerRadius = 12
         clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
-        addSubview(imageView)
+        addSubview(pagePhotosView)
         setupGradient()
-        setupPageControl()
+//        setupPageControl()
         addSubview(label)
-        imageView.fillSuperview()
+        pagePhotosView.fillSuperview()
         addSubview(infoButton)
         
         NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16), label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16), label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16), infoButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16), infoButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16), infoButton.widthAnchor.constraint(equalToConstant: 40), infoButton.heightAnchor.constraint(equalToConstant: 40)])
