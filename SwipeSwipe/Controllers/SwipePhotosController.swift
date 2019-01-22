@@ -13,6 +13,8 @@ class SwipePhotosController: UIPageViewController {
         }
     }
     
+    private let deselectedBar = UIColor(white: 0.5, alpha: 1)
+    
     private let stackViewBars = UIStackView(arrangedSubviews: [])
     
     private func setupBars() {
@@ -51,15 +53,17 @@ class SwipePhotosController: UIPageViewController {
     @objc private func handleTap(gesture: UITapGestureRecognizer) {
         let currentController = viewControllers!.first!
         if let index = controllers.firstIndex(of: currentController) {
+            stackViewBars.arrangedSubviews.forEach({$0.backgroundColor = deselectedBar})
             if gesture.location(in: self.view).x > view.frame.width / 2 {
-                
                 let nextIndex = min(index + 1, controllers.count - 1)
                 let nextController = controllers[nextIndex]
                 setViewControllers([nextController], direction: .forward, animated: false, completion: nil)
+                stackViewBars.arrangedSubviews[nextIndex].backgroundColor = .white
             } else {
                 let prevIndex = max(0, index - 1)
                 let prevController = controllers[prevIndex]
                 setViewControllers([prevController], direction: .forward, animated: false, completion: nil)
+                stackViewBars.arrangedSubviews[prevIndex].backgroundColor = .white
             }
         }
     }
