@@ -20,6 +20,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         super.viewDidLoad()
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         bottomStackView.refreshButton.addTarget(self, action: #selector(handleRefreshButton), for: .touchUpInside)
+        bottomStackView.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         setup()
         setupCards()
         fetchCurrentUser()
@@ -56,11 +57,19 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
                 print("Failed to fetch users: \(error)")
                 return
             }
+            var previousCardView: CardView?
             snapshot?.documents.forEach({ (documentSnapshot) in
                 let userDictionary = documentSnapshot.data()
                 let place = Place(dictionary: userDictionary)
                 if place.uid != Auth.auth().currentUser?.uid {
-                    self.setupCardFromPlace(place: place)
+                    let cardView = self.setupCardFromPlace(place: place)
+                    
+                    previousCardView?.nextCardView = cardView
+                    previousCardView = cardView
+                    
+                    if self.topCardView == nil {
+                        self.topCardView = cardView
+                    }
                 }
 //                self.viewModel.append(place.toCardViewModel())
 //                self.lastFetchedPlace = place
@@ -69,13 +78,30 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         }
     }
     
-    private func setupCardFromPlace(place: Place) {
+    var topCardView: CardView?
+    
+    @objc private func handleLike() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+            self.topCardView?.frame = CGRect(x: 600, y: 0, width: self.topCardView!.frame.width, height: self.topCardView!.frame.height)
+        }) { (_) in
+            self.topCardView?.removeFromSuperview()
+            self.topCardView = self.topCardView?.nextCardView
+        }
+    }
+    
+    func didRemoveCard(cardView: CardView) {
+        self.topCardView?.removeFromSuperview()
+        self.topCardView = self.topCardView?.nextCardView
+    }
+    
+    private func setupCardFromPlace(place: Place) -> CardView {
         let cardView = CardView(frame: .zero)
         cardView.delegate = self
         cardView.cardViewModel = place.toCardViewModel()
         cardDeckView.addSubview(cardView)
         cardDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
+        return cardView
     }
     
     func didTapInfo(viewModel: CardViewModel) {

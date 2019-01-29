@@ -3,9 +3,12 @@ import SDWebImage
 
 protocol CardViewDelegate {
     func didTapInfo(viewModel: CardViewModel)
+    func didRemoveCard(cardView: CardView)
 }
 
 class CardView: UIView {
+    
+    var nextCardView: CardView?
     
     var delegate: CardViewDelegate?
     
@@ -160,13 +163,13 @@ class CardView: UIView {
                 self.transform = .identity
                 if shouldDismissCard {
                     self.removeFromSuperview()
+                    self.delegate?.didRemoveCard(cardView: self)
                 }
             }
         default:
             break
         }
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
